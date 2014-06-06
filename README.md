@@ -1,6 +1,10 @@
 Bootstrap 3 Lightbox
 ========
 
+*This Fork adds Instagram video support.
+
+Just use "instagram" in the data-type (instead of image, youtube or vimeo).
+
 A lightbox module for Bootstrap that supports images, YouTube videos, and galleries - built around Bootstrap's Modal plugin.
 
 See the github page for docs: http://ashleydw.github.io/lightbox
