@@ -1,8 +1,10 @@
 /*
-Lightbox for Bootstrap 3 by @ashleydw
-https://github.com/ashleydw/lightbox
-
-License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
+ * Lightbox for Bootstrap 3 by @ashleydw
+ * https://github.com/ashleydw/lightbox
+ *
+ * A fork by wislem https://github.com/wislem/lightbox
+ * Adds instagram video functionality (added "instagram" option along with "image", "youtube", "vimeo")
+ * License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
 */
 
 
@@ -94,6 +96,8 @@ License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
             return this.showYoutubeVideo(video_id);
           } else if (this.options.type === 'vimeo') {
             return this.showVimeoVideo(this.options.remote);
+          } else if (this.options.type === 'instagram') {
+            return this.showInstagramVideo(this.options.remote);
           } else {
             return this.error("Could not detect remote target type. Force the type using data-type=\"image|youtube|vimeo\"");
           }
@@ -124,6 +128,13 @@ License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
       }
     },
     getVimeoId: function(str) {
+      if (str.indexOf('vimeo') > 0) {
+        return str;
+      } else {
+        return false;
+      }
+    },
+    getInstagramId: function(str) {
       if (str.indexOf('vimeo') > 0) {
         return str;
       } else {
@@ -188,6 +199,9 @@ License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
       } else if (type === 'vimeo' || (video_id = this.getVimeoId(src))) {
         this.options.type = 'vimeo';
         return this.showVimeoVideo(video_id);
+      } else if (type === 'instagram' || (video_id = this.getInstagramId(src))) {
+        this.options.type = 'instagram';
+        return this.showInstagramVideo(video_id);
       } else {
         return this.error("Could not detect remote target type. Force the type using data-type=\"image|youtube|vimeo\"");
       }
@@ -234,6 +248,18 @@ License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
       height = width / aspectRatio;
       this.resize(width);
       this.lightbox_body.html('<iframe width="' + width + '" height="' + height + '" src="' + id + '?autoplay=1" frameborder="0" allowfullscreen></iframe>');
+      if (this.modal_arrows) {
+        return this.modal_arrows.css('display', 'none');
+      }
+    },
+    showInstagramVideo: function(id) {
+      var aspectRatio, height, width;
+      aspectRatio = 500 / 281;
+      width = this.$element.data('width') || 560;
+      width = this.checkDimensions(width);
+      height = width / aspectRatio;
+      this.resize(width);
+      this.lightbox_body.html('<iframe width="' + width + '" height="' + height + '" src="' + id + '" frameborder="0" allowfullscreen></iframe>');
       if (this.modal_arrows) {
         return this.modal_arrows.css('display', 'none');
       }
